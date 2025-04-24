@@ -5,9 +5,11 @@ from .serializers import VideoSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework import permissions
 
 class VideoUploadView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request):
         serializer = VideoSerializer(data=request.data)
         if serializer.is_valid():
