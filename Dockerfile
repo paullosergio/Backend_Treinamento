@@ -9,23 +9,18 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Instalar dependências do sistema
-RUN apt-get update && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libpq-dev gcc
 
 # Copiar requirements.txt
 COPY requirements.txt .
 
 # Instalar dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
-
 RUN pip install uvicorn
 RUN pip install pydantic
 
 # Copiar o projeto
 COPY . .
-
-# Coletar arquivos estáticos
-RUN python manage.py collectstatic --noinput
 
 # Expor a porta 8000
 EXPOSE 8000
