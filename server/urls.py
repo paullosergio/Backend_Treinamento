@@ -8,4 +8,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/usuarios/", include("usuarios.urls")),
     path("api/videos/", include("videos.urls")), 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -22,5 +22,8 @@ RUN pip install pydantic
 # Copiar o projeto
 COPY . .
 
+# Coletar arquivos estáticos
+RUN python manage.py collectstatic --noinput
+
 # Expor a porta 8000
 EXPOSE 8000
