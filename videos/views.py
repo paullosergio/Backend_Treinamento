@@ -1,32 +1,35 @@
-# videos/views.py
-from rest_framework import generics
-from .models import Video
-from .serializers import VideoSerializer
+from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import permissions
+from django.shortcuts import get_object_or_404
+from .models import Video
+from .serializers import VideoSerializer
 
-class VideoUploadView(APIView):
+
+class VideoUploadView(generics.CreateAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        serializer = VideoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"message": "Vídeo enviado com sucesso!"}, status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(
+            {"message": "Vídeo enviado com sucesso!"},
+            status=status.HTTP_201_CREATED,
+        )
 
 class VideoListView(generics.ListAPIView):
     """
     Lista todos os vídeos.
     """
 
+class VideoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "id"
 
 
 class VideoByBankListView(generics.ListAPIView):
