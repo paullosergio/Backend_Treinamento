@@ -3,7 +3,6 @@ from .views import VideoUploadView, VideoListView, VideoByBankListView, VideoDet
 
 urlpatterns = [
     path('upload/', VideoUploadView.as_view(), name='video-upload'),
-    path('list/', VideoListView.as_view(), name='video-list'),
     path('', VideoByBankListView.as_view(), name='video-filter-by-bank'),
     path('<int:pk>/', VideoDetailView.as_view(), name='video-detail'),
 ]
