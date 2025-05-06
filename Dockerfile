@@ -16,10 +16,6 @@ COPY requirements.txt .
 
 # Instalar dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install uvicorn
-RUN pip install pydantic
-# Adicionar whitenoise para servir arquivos estáticos
-RUN pip install whitenoise
 
 # Copiar o projeto
 COPY . .
@@ -37,6 +33,3 @@ RUN python manage.py collectstatic --noinput
 
 # Expor a porta 8000
 EXPOSE 8000
-
-# Comando para iniciar o servidor
-CMD ["uvicorn", "server.asgi:application", "--host", "0.0.0.0", "--port", "8000"]
