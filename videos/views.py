@@ -29,7 +29,6 @@ class VideoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = "id"
 
 
 class VideoByBankListView(generics.ListAPIView):
